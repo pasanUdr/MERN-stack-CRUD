@@ -3,19 +3,16 @@ const cors = require('cors')
 const app = express()
 const mongoose = require('mongoose');
 
-// const bodyParser = require('body-parser');
-// app.use(bodyParser.json());
-
 app.use(cors())
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 4000
 
 //schema
 const schemaData = mongoose.Schema({
     "name": String,
     "email": String,
-    "mobile": Number,
+    "mobile": Number
 }, {
     timestamps: true
 })
@@ -28,12 +25,21 @@ const userModel = mongoose.model("user", schemaData)
 // })
 
 //read api
+//http://localhost:4000/
 app.get('/', async(req, res) => {
     const data = await userModel.find({})
     res.json({ success: true, data: data })
 })
 
 //create api / save data in mongodb
+//http://localhost:4000/create
+/*
+{
+   "name": "xxxx",
+    "email": "xxxx",
+    "mobile": "xxxx"
+}
+ */
 app.post('/create', async(req, res) => {
     console.log(req.body)
     const data = new userModel(req.body)
@@ -42,6 +48,15 @@ app.post('/create', async(req, res) => {
 })
 
 //update data api
+//http://localhost:4000/update
+/*
+{
+   "id": "xxxx",
+   "name": "xxxx",
+    "email": "xxxx",
+    "mobile": xxxxx
+}
+*/
 app.put('/update', async(req, res) => {
     console.log(req.body)
     const { id,...rest } = req.body
@@ -51,6 +66,7 @@ app.put('/update', async(req, res) => {
 })
 
 //delete data api
+//http://localhost:4000/delete/id(xxxxxxx)
 app.delete('/delete/:id', async(req, res) => {
     const id = req.params.id
     console.log(id)
@@ -62,6 +78,6 @@ app.delete('/delete/:id', async(req, res) => {
 mongoose.connect('mongodb://localhost:27017/testCRUD')
     .then(() => {
         console.log('Connected to DB')
-        app.listen(PORT, () => console.log("Sever is running")) // app.listen(3000)
+        app.listen(PORT, () => console.log(`Sever is running on ${PORT}`)) // app.listen(3000)
     })
     .catch((err) => console.log(err)); //if there's any error it will show in the console
