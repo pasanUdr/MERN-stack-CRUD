@@ -7,15 +7,39 @@ app.use(cors())
 
 const PORT = process.env.PORT || 3000
 
+//schema
+const schemaData = mongoose.Schema({
+    name: String,
+    email: String,
+    mobile: Number,
+},{
+    timestamps: true
+})
 
+//model
+const userModel = mongoose.model("user", schemaData)
 
 // app.get('/', function(req, res) {
 //     res.send('Hello World')
 // })
 
-app.get('/', (req, res) => {
-    res.json({ message: "Sever is running CRUD" })
+//read
+app.get('/', async (req, res) => {
+    const data = await userModel.find({})
+    res.json({ success: true, data: data })
 })
 
-// app.listen(3000)
-app.listen(PORT, () => console.log("Sever is running"))
+//create data / save data in mongodb
+app.post('/create', (req, res) => {
+    console.log(req.body)
+})
+
+//connecting the db
+mongoose.connect('mongodb://localhost:27017/testCRUD')
+    .then(() => {
+        console.log('Connected to DB')
+        app.listen(PORT, () => console.log("Sever is running")) // app.listen(3000)
+    })
+    .catch((err) => console.log(err)); //if there's any error it will show in the console
+
+
