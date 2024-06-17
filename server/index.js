@@ -27,18 +27,35 @@ const userModel = mongoose.model("user", schemaData)
 //     res.send('Hello World')
 // })
 
-//read
+//read api
 app.get('/', async(req, res) => {
     const data = await userModel.find({})
     res.json({ success: true, data: data })
 })
 
-//create data / save data in mongodb
+//create api / save data in mongodb
 app.post('/create', async(req, res) => {
     console.log(req.body)
     const data = new userModel(req.body)
     await data.save()
-    res.send({ success: true, message: "data saved successfully" })
+    res.send({ success: true, message: "data saved successfully", data: data })
+})
+
+//update data api
+app.put('/update', async(req, res) => {
+    console.log(req.body)
+    const { id,...rest } = req.body
+    console.log(rest)
+    const data = await userModel.updateOne({_id: req.body.id},rest)
+    res.send({ success: true, message: "data updated successfully", data: data })
+})
+
+//delete data api
+app.delete('/delete/:id', async(req, res) => {
+    const id = req.params.id
+    console.log(id)
+    const data = await userModel.deleteOne({_id: id})
+    res.send({ success: true, message: "data deleted successfully", data: data })
 })
 
 //connecting the db
