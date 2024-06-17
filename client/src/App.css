@@ -1,14 +1,59 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: #f5f6ff;
 }
 
-.container{
+.container {
     padding: 10px;
     background-color: brown;
     max-width: 700px;
     margin: 50px auto;
+}
+
+.btn {
+    border: none;
+    padding: 8px 15px;
+    font-size: x-large;
+    border-radius: 10px;
+}
+
+.btn-add {
+    background-color: aquamarine;
+    cursor: pointer;
+}
+
+.addContainer {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.2);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addContainer form {
+    width: 500px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.addContainer form label {
+    font-size: large;
+}
+
+.addContainer form input {
+    font-size: x-large;
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }

@@ -59,9 +59,9 @@ app.post('/create', async(req, res) => {
 */
 app.put('/update', async(req, res) => {
     console.log(req.body)
-    const { id,...rest } = req.body
+    const { id, ...rest } = req.body
     console.log(rest)
-    const data = await userModel.updateOne({_id: req.body.id},rest)
+    const data = await userModel.updateOne({ _id: req.body.id }, rest)
     res.send({ success: true, message: "data updated successfully", data: data })
 })
 
@@ -70,7 +70,7 @@ app.put('/update', async(req, res) => {
 app.delete('/delete/:id', async(req, res) => {
     const id = req.params.id
     console.log(id)
-    const data = await userModel.deleteOne({_id: id})
+    const data = await userModel.deleteOne({ _id: id })
     res.send({ success: true, message: "data deleted successfully", data: data })
 })
 
@@ -78,6 +78,6 @@ app.delete('/delete/:id', async(req, res) => {
 mongoose.connect('mongodb://localhost:27017/testCRUD')
     .then(() => {
         console.log('Connected to DB')
-        app.listen(PORT, () => console.log(`Sever is running on ${PORT}`)) // app.listen(3000)
+        app.listen(PORT, () => console.log(`Sever is running on port ${PORT}`)) // app.listen(3000)
     })
     .catch((err) => console.log(err)); //if there's any error it will show in the console
