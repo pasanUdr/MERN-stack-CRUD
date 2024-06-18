@@ -9,7 +9,7 @@ body {
 .container {
     padding: 10px;
     /* background-color: brown; */
-    max-width: 700px;
+    max-width: fit-content;
     margin: 50px auto;
 }
 
@@ -73,4 +73,41 @@ body {
     cursor: pointer;
     display: flex;
     /* background-color: rgb(237, 79, 79); */
+}
+
+.tableContainer {
+    margin-top: 50px;
+    /* border: 1px solid #807777; */
+    box-shadow: 5px 5px 10px rgb(90, 79, 79);
+    border-radius: 10px;
+}
+
+.tableContainer table {}
+
+.tableContainer table thead tr {
+    background-color: rgb(125, 163, 163);
+}
+
+.tableContainer table thead tr th,
+.tableContainer table tbody tr td {
+    min-width: 200px;
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #807777;
+}
+
+.btn-edit,
+.btn-delete {
+    font-size: 15px;
+    padding: 5px 10px;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background-color: #ebf25d;
+}
+
+.btn-delete {
+    background-color: #f91717;
 }

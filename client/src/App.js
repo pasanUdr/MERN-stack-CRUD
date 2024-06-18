@@ -27,9 +27,9 @@ function App() {
     }})
   }
 
-  //stop refreshing page when clicking submit btn
+  //function for save/post data
   const handleSubmit = async(e) => {
-    e.preventDefault()
+    e.preventDefault() //stop refreshing page when clicking submit btn
     //posting to db through axios
     const data = await axios.post("/create",formData)
     console.log(data)
@@ -37,15 +37,17 @@ function App() {
     if(data.data.success){
       setAddSection(false)
       alert(data.data.message)
+      getFetchData() // auto render with new added data
     }
   }
 
-  //retriewing saved data
+  //function for retriewing saved data
   const getFetchData = async()=>{
     const data = await axios.get("/")
+    console.log(data) //to check data retriewing from db to inspect console
     if(data.data.success){
-      setDataList(data.data)
-      alert(data.data.message)
+      setDataList(data.data.data)
+      // alert(data.data.message)
     }
   }
 
@@ -53,11 +55,23 @@ function App() {
     getFetchData()
   },[])
 
+  // console.log(dataList) //to list retriewing data in inspect console
+
+  //function for delete
+  const handleDelete = async(id)=>{
+    const data = await axios.delete("/delete/"+id)
+    alert(data.data.message)
+    if(data.data.success){
+      getFetchData()
+    }
+  }
+
   return (
     <>
       <div className="container">
         <button className="btn btn-add" onClick={() => setAddSection(true)}>ADD</button>
 
+        {/* add data section */}
         {addSection && (
           <div className="addContainer">
             <form onSubmit={handleSubmit}>
@@ -77,6 +91,41 @@ function App() {
             </form>
           </div>
         )}
+
+        <div className="tableContainer">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th> </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              { dataList[0] ? (
+                dataList.map((el)=>{
+                  return(
+                    <tr>
+                      <td>{el.name}</td>
+                      <td>{el.email}</td>
+                      <td>{el.mobile}</td>
+                      <td>
+                        <button className="btn btn-edit">Edit</button>
+                        <button className="btn btn-delete" onClick={()=>handleDelete(el._id)}>Delete</button>
+                      </td>
+                    </tr>
+                  )
+                }))
+                : (
+                  <p style={{textAlign:"center"}}>No Data</p>
+                )
+              }
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </>
   );
