@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { FaWindowClose } from "react-icons/fa";
 import axios from 'axios';
@@ -14,6 +14,8 @@ function App() {
     email: "",
     mobile: "",
   })
+  //retriew data
+  const[dataList,setDataList] = useState([])
 
   //
   const handleOnChange = (e) =>{
@@ -36,7 +38,20 @@ function App() {
       setAddSection(false)
       alert(data.data.message)
     }
-  };
+  }
+
+  //retriewing saved data
+  const getFetchData = async()=>{
+    const data = await axios.get("/")
+    if(data.data.success){
+      setDataList(data.data)
+      alert(data.data.message)
+    }
+  }
+
+  useEffect(()=>{
+    getFetchData()
+  },[])
 
   return (
     <>
